@@ -79,3 +79,6 @@ fos_rest:
     format_listener:
         rules:
             - { path: '^/', priorities: ['json'], fallback_format: 'json' }
+
+sensio_framework_extra:
+    request: { converters: true }

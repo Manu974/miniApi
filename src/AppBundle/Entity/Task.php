@@ -50,7 +50,7 @@ class Task
     private $status;
 
     /**
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
     private $user_id;
