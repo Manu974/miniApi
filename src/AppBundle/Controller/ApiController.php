@@ -111,6 +111,49 @@ class ApiController extends FOSRestController
 
     }
 
+    /**
+     * @Rest\View(StatusCode = 204)
+     * @Rest\Delete(
+     *     path = "/users/{id}",
+     *     name = "app_user_delete",
+     *     requirements = {"id"="\d+"}
+     * )
+     */
+    public function deleteUserAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findBy(array('user_id' => $user->getId()));
+
+        foreach ($tasks as $task) {
+            $em->remove($task);
+        }
+
+        $em->remove($user);
+        $em->flush();
+
+        
+    }
+
+
+    /**
+     * @Rest\View(StatusCode = 204)
+     * @Rest\Delete(
+     *     path = "/tasks/{id}",
+     *     name = "app_task_delete",
+     *     requirements = {"id"="\d+"}
+     * )
+     */
+    public function deleteTaskAction(Task $task)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($task);
+        $em->flush();
+
+        
+    }
+
 
 
     
