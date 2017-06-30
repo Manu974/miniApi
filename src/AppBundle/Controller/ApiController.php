@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 
+
+
 class ApiController extends FOSRestController
 {
     /**
@@ -66,8 +68,12 @@ class ApiController extends FOSRestController
         $em->persist($task);
         $em->flush();
 
+        
+
         return $this->view($task, Response::HTTP_CREATED, ['Location' => $this->generateUrl('app_task_show', ['id' => $task->getId(), UrlGeneratorInterface::ABSOLUTE_URL])
             ]);
+        
+
                 
     }
 
@@ -87,27 +93,49 @@ class ApiController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
+       
+
         return $this->view($user, Response::HTTP_CREATED, ['Location' => $this->generateUrl('app_user_show', ['id' => $user->getId(), UrlGeneratorInterface::ABSOLUTE_URL])
             ]);
+
+
                 
     }
 
 
     /**
      * @Rest\Get(
-     *     path = "/lists",
-     *     name = "app_list_show",
+     *     path = "/lists/tasks",
+     *     name = "app_list_tasks_show",
      * 
      * )
      * @Rest\View(
      *              statusCode = 200
      *              )
      */
-    public function showListAction()
+    public function showListTaskAction()
     {
             $list = $this->getDoctrine()->getRepository('AppBundle:Task')->findAll();
-            dump($list); die;
-            return $user;
+           
+            return $list;
+
+    }
+
+    /**
+     * @Rest\Get(
+     *     path = "/lists/users",
+     *     name = "app_list_user_show",
+     * 
+     * )
+     * @Rest\View(
+     *              statusCode = 200
+     *              )
+     */
+    public function showListUserAction()
+    {
+            $list = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+            
+            return $list;
 
     }
 
