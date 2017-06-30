@@ -31,8 +31,9 @@ class ApiController extends FOSRestController
      */
     public function showUserAction(User $user)
     {
+        
 
-        return $user;
+        return array($user);
 
     }
 
@@ -55,16 +56,18 @@ class ApiController extends FOSRestController
 
      /**
      * @Rest\Post(
-     *    path = "/tasks",
-     *    name = "app_task_create"
+     *    path = "/tasks/{user_id}",
+     *    name = "app_task_create",
+     *     requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 201)
      * @ParamConverter("task", converter="fos_rest.request_body")
      */
-    public function createTaskAction(Task $task)
-    {
+    public function createTaskAction(Task $task, $user_id)
+    {       
         $em = $this->getDoctrine()->getManager();
-
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($user_id);
+        $task->setUserId($user);
         $em->persist($task);
         $em->flush();
 
@@ -72,8 +75,7 @@ class ApiController extends FOSRestController
 
         return $this->view($task, Response::HTTP_CREATED, ['Location' => $this->generateUrl('app_task_show', ['id' => $task->getId(), UrlGeneratorInterface::ABSOLUTE_URL])
             ]);
-        
-
+       
                 
     }
 
@@ -105,19 +107,21 @@ class ApiController extends FOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/lists/tasks",
+     *     path = "/lists/tasks/{user_id}",
      *     name = "app_list_tasks_show",
+     *     requirements = {"id"="\d+"}
      * 
      * )
      * @Rest\View(
      *              statusCode = 200
      *              )
      */
-    public function showListTaskAction()
+    public function showListTaskAction($user_id)
     {
-            $list = $this->getDoctrine()->getRepository('AppBundle:Task')->findAll();
+            $listTasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findBy(array('user_id' => $user_id));
+            
            
-            return $list;
+            return $listTasks;
 
     }
 
@@ -133,9 +137,9 @@ class ApiController extends FOSRestController
      */
     public function showListUserAction()
     {
-            $list = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+            $listUsers = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
             
-            return $list;
+            return $listUsers;
 
     }
 
