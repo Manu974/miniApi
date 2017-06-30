@@ -68,6 +68,7 @@ class ApiController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($user_id);
         $task->setUserId($user);
+        $task->setCreationDate( new \Datetime('now', new \DateTimeZone('Europe/Paris')));
         $em->persist($task);
         $em->flush();
 
