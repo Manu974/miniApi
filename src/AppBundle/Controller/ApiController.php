@@ -17,18 +17,11 @@ use AppBundle\Exception\ResourceValidationException;
 use Nelmio\ApiDocBundle\Annotation as Doc;
 
 
-
-
-
-
-
-
-
 class ApiController extends FOSRestController
 {
     /**
      * @Rest\Get(
-     *     path = "/users/{id}",
+     *     path = "/api/users/{id}",
      *     name = "app_user_show",
      *     requirements = {"id"="\d+"}
      * )
@@ -64,7 +57,7 @@ class ApiController extends FOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/tasks/{id}",
+     *     path = "/api/tasks/{id}",
      *     name = "app_task_show",
      *     requirements = {"id"="\d+"}
      * )
@@ -98,7 +91,7 @@ class ApiController extends FOSRestController
 
      /**
      * @Rest\Post(
-     *    path = "/tasks/{user_id}",
+     *    path = "/api/tasks/{user_id}",
      *    name = "app_task_create",
      *     requirements = {"user_id"="\d+"}
      * )
@@ -153,7 +146,7 @@ class ApiController extends FOSRestController
 
     /**
      * @Rest\Post(
-     *    path = "/users",
+     *    path = "/api/users",
      *    name = "app_user_create"
      * )
      * @Rest\View(StatusCode = 201)
@@ -198,7 +191,7 @@ class ApiController extends FOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/lists/tasks/{user_id}",
+     *     path = "/api/lists/tasks/{user_id}",
      *     name = "app_list_tasks_show",
      *     requirements = {"user_id"="\d+"}
      * 
@@ -235,7 +228,7 @@ class ApiController extends FOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/lists/users",
+     *     path = "/api/lists/users",
      *     name = "app_list_users_show",
      * 
      * )
@@ -265,7 +258,7 @@ class ApiController extends FOSRestController
     /**
      * @Rest\View(StatusCode = 204)
      * @Rest\Delete(
-     *     path = "/users/{id}",
+     *     path = "/api/users/{id}",
      *     name = "app_user_delete",
      *     requirements = {"id"="\d+"}
      * )
@@ -308,7 +301,7 @@ class ApiController extends FOSRestController
     /**
      * @Rest\View(StatusCode = 204)
      * @Rest\Delete(
-     *     path = "/tasks/{id}",
+     *     path = "/api/tasks/{id}",
      *     name = "app_task_delete",
      *     requirements = {"id"="\d+"}
      * )
