@@ -155,7 +155,7 @@ class ApiController extends FOSRestController
     /**
      * @Rest\Get(
      *     path = "/lists/users",
-     *     name = "app_list_user_show",
+     *     name = "app_list_users_show",
      * 
      * )
      * @Rest\View(
