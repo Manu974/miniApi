@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use AppBundle\Exception\ResourceValidationException;
+use Nelmio\ApiDocBundle\Annotation as Doc;
+
 
 
 
@@ -33,6 +35,24 @@ class ApiController extends FOSRestController
      * @Rest\View(
      *              statusCode = 200
      *              )
+     * @Doc\ApiDoc(
+     *     section="Users",
+     *     resource=true,
+     *     description="Get one user.",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The user unique identifier."
+     *         }
+     *      
+     *     },
+     *       statusCodes={
+     *         200="Returned when succesful",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
      */
     public function showUserAction(User $user)
     {
@@ -51,6 +71,23 @@ class ApiController extends FOSRestController
      * @Rest\View(
      *              statusCode = 200
      *              )
+     * @Doc\ApiDoc(
+     *    section="Tasks",
+     *     resource=true,
+     *     description="Get one task.",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The task unique identifier."
+     *         }
+     *     },
+     *       statusCodes={
+     *         200="Returned when succesful",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
      */
     public function showTaskAction(Task $task)
     {
@@ -63,10 +100,27 @@ class ApiController extends FOSRestController
      * @Rest\Post(
      *    path = "/tasks/{user_id}",
      *    name = "app_task_create",
-     *     requirements = {"id"="\d+"}
+     *     requirements = {"user_id"="\d+"}
      * )
      * @Rest\View(StatusCode = 201)
      * @ParamConverter("task", converter="fos_rest.request_body")
+     * @Doc\ApiDoc(
+     *    section="Tasks",
+     *     resource=true,
+     *     description="Create a task.",
+     *     requirements={
+     *         {
+     *             "name"="user_id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The user unique identifier who created the task."
+     *         }
+     *     },
+     *       statusCodes={
+     *         201="Returned when created",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
      */
     public function createTaskAction(Task $task, $user_id, ConstraintViolationList $violations)
     {       
@@ -104,6 +158,16 @@ class ApiController extends FOSRestController
      * )
      * @Rest\View(StatusCode = 201)
      * @ParamConverter("user", converter="fos_rest.request_body")
+     * @Doc\ApiDoc(
+     *     section="Users",
+     *     resource=true,
+     *     description="Create a user.",
+    *       statusCodes={
+     *         201="Returned when created",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     *     
+     * )
      */
     public function createUserAction(User $user, ConstraintViolationList $violations)
     {
@@ -136,12 +200,29 @@ class ApiController extends FOSRestController
      * @Rest\Get(
      *     path = "/lists/tasks/{user_id}",
      *     name = "app_list_tasks_show",
-     *     requirements = {"id"="\d+"}
+     *     requirements = {"user_id"="\d+"}
      * 
      * )
      * @Rest\View(
      *              statusCode = 200
      *              )
+     * @Doc\ApiDoc(
+     *    section="Tasks",
+     *     resource=true,
+     *     description="list All task fot current user.",
+     *     requirements={
+     *         {
+     *             "name"="user_id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The user unique identifier who created tasks for list."
+     *         }
+     *     },
+    *       statusCodes={
+     *         200="Returned when succesful",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
      */
     public function showListTaskAction($user_id)
     {
@@ -161,6 +242,17 @@ class ApiController extends FOSRestController
      * @Rest\View(
      *              statusCode = 200
      *              )
+     * @Doc\ApiDoc(
+     *     section="Users",
+     *     resource=true,
+     *     description="list All users.",
+     *       statusCodes={
+     *         200="Returned when succesful",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
+     *     
+     * )
      */
     public function showListUserAction()
     {
@@ -176,6 +268,24 @@ class ApiController extends FOSRestController
      *     path = "/users/{id}",
      *     name = "app_user_delete",
      *     requirements = {"id"="\d+"}
+     * )
+     * @Doc\ApiDoc(
+     *     section="Users",
+     *     resource=true,
+     *     description="delete a user",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The user unique identifier"
+     *         }
+     *     },
+     *       statusCodes={
+     *         200="Returned when succesful",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
      * )
      */
     public function deleteUserAction(User $user)
@@ -201,6 +311,24 @@ class ApiController extends FOSRestController
      *     path = "/tasks/{id}",
      *     name = "app_task_delete",
      *     requirements = {"id"="\d+"}
+     * )
+     * @Doc\ApiDoc(
+     *    section="Tasks",
+     *     resource=true,
+     *     description="delete a task",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirements"="\d+",
+     *             "description"="The task unique identifier"
+     *         }
+     *     },
+     *       statusCodes={
+     *         200="Returned when succesful",
+     *         400="Returned when a violation is raised by validation"
+     *       }
+     * )
      * )
      */
     public function deleteTaskAction(Task $task)
